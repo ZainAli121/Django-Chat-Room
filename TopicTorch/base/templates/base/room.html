@@ -1,0 +1,8 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1> Chat room </h1>
+
+<h4>{{room.name}}</h4>
+<h5><a href="{% url 'home' %}">Back</a></h5>
+{% endblock content %}
