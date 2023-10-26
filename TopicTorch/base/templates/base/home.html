@@ -4,8 +4,13 @@
 
 <h1>Hello, Home page</h1>
 
+<div>
 {% for room in rooms %}
+   <span>@{{room.host.username}}</span>
    <h5>{{ room.id }} <a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
+   <small>{{room.topic.name}}</small>
+   <hr>
 {% endfor %}
+</div>
 
 {% endblock content %}
