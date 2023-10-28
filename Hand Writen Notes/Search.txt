@@ -1,0 +1,35 @@
+					--------Searching Rooms--------------------
+
+First of all make query in views like this:
+
+def home(request):
+    query = request.GET.get('query') if request.GET.get('query') != None else ''     ....added this
+    rooms = Room.objects.filter(topic__name__icontains=query)                        ....added this
+
+"""
+ What these two lines basically meaans?
+ Answer is, in the first line we are making query(requesting) 
+and in the second line, we are passing the this query to room and the room is searching this and will return this if found
+"""
+ 
+    topics = Topic.objects.all()
+
+    context = {'rooms': rooms, 'topics' : topics}
+    return render(request, 'base/home.html', context)
+
+Note: With this queryset we are only able to access the room's with the topic names, 
+so for accessing the rooms with different parameters, and making it look more dynamic do the following:
+
+1. Import the following:
+	- from django.db.models import Q
+
+2. Access the 'Q' like this:
+query = request.GET.get('query') if request.GET.get('query') != None else ''
+    rooms = Room.objects.filter(
+        Q(topic__name__icontains=query) |
+        Q(name__icontains = query) |
+        Q(desc__icontains = query)
+                                )
+
+Note: This pipe symbol '|' is used as or (it will be true if any of these cnditions matches) 
+and you can use '&'(it is called as 'and', it will be true when all conditions matches  
