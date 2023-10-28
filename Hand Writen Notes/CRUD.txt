@@ -1,0 +1,86 @@
+Note: These CRUD operatins are for chatroom application
+
+                    ---CRUD---
+----Create form:
+create are many ways of creating form,here is the one:
+1. Create a file in your app with name of 'forms.py'
+
+2. import these:
+         - from django.forms import ModelForm
+	 - from .models import *
+
+3. class RoomForm(ModelForm):        # 'RoomForm' can be replaced with any desired name
+	class Meta:
+		model = Room         # replace it with the model name for which you are creating form
+		fields = '__all__'   # there are maany methods available for accessing fields
+
+Done, Your form is cerated................
+
+
+---- Create Room:
+For creating room in views.py, do the following:
+
+1. Import the following
+	- from .forms import RoomForm
+
+2. def createRoom(request):  
+    form = RoomForm()    	# Access 'form' here
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('home')
+    context = {'form' : form}    	# pass 'form' in the dictionary, so that we can access it in tmeplates
+    return render(request, 'base/room_form.html', context)
+
+Done, Room is created----------
+
+
+--- Update Room:
+For updating room, do the following:
+
+def updateRoom(request, pk):
+    room = Room.objects.get(id=pk)   #accessing room with it's id
+    form = RoomForm(instance=room)   # passing the instance of room in form bcuz we want the data to be autofilled here
+    if request.method == 'POST':  
+        form = RoomForm(request.POST ,instance=room)
+        if form.is_valid:
+            form.save()
+            return redirect('home')
+    context = {'form':form}
+    return render(request, 'base/room_form.html', context)
+
+Done, room is updated-------------
+
+
+--- Delete Room:
+For deleting room, do the following:
+
+def deleteRoom(request, pk):
+    room = Room.objects.get(id=pk)  # accessing room with its id
+    if request.method == 'POST':
+        room.delete()      	  # deleting the room bt 'delete' method
+        return redirect('home')   # redirecting user back to homepage 
+    return render(request, 'base/delete.html', {'obj': room})   
+
+Done, room is deleted----------
+
+Note: All url's and templates for these views are pretty stright forward, Create them by your own....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
