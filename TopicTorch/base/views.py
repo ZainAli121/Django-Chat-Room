@@ -1,11 +1,20 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import *
 from .forms import *
 # Create your views here.
 
 def home(request):
-    rooms = Room.objects.all()
-    context = {'rooms': rooms}
+    query = request.GET.get('query') if request.GET.get('query') != None else ''
+    rooms = Room.objects.filter(
+        Q(topic__name__icontains=query) |
+        Q(name__icontains = query) |
+        Q(desc__icontains = query)
+                                )
+
+    topics = Topic.objects.all()
+    rooms_count = rooms.count()
+    context = {'rooms': rooms, 'topics' : topics, 'rooms_count': rooms_count}
     return render(request, 'base/home.html', context)
 
 def room(request, pk):
@@ -37,7 +46,6 @@ def updateRoom(request, pk):
 def deleteRoom(request, pk):
     room = Room.objects.get(id=pk)
     if request.method == 'POST':
-        # room = Room.objects.get(id=pk)
         room.delete()
         return redirect('home')
     return render(request, 'base/delete.html', {'obj': room})

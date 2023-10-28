@@ -2,3 +2,6 @@
 <a href="{% url 'create-room' %}">Create Room</a>
 
 <hr>
+    <form method="get" action="{% url 'home' %}">
+        <input type="text" name="query" placeholder="Search Topics..">
+    </form>
