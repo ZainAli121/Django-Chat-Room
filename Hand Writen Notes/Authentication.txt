@@ -1,0 +1,100 @@
+<-----------------------------------*Login*---------------------------------------------->
+1. First of all create a template or form for login.
+
+2. open up views.py and import the following:
+	- from django.contrib.auth.models import User         # importing django's default user
+	- from django.contrib.auth import authenticate, login, logout   
+	- from django.contrib import messages          # optional(if you want to dispay some message)
+
+
+3. write the view for login.....
+def loginUser(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')  
+        user = User.objects.get(username=username)
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request,'Incorrect username or password')
+
+    context = {}
+    return render(request, 'base/login_register.html', context)
+
+
+
+<-----------------------------------*Logout*---------------------------------------------->
+
+def logoutUser(request):   
+	logout(request) # just using the django's default logout user which is provided to us and deleting the session of user.
+	return redirect('login')   
+
+
+
+
+
+
+<-----------------------------------*Signup*---------------------------------------------->
+for registering user, we can use django's default RegisterForm provided to us. For doin this, follow the steps:
+
+1. import the following:
+	- from django.contrib.auth.forms import UserCreationForm
+
+2. Write the view as:
+
+def registerUser(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        
+        else:
+            messages.error(request, 'Error occured during registration')
+
+    context = {'form': form}
+    return render(request, 'base/login_register.html', context)
+	
+
+
+
+
+<-----------------------------------*Restricting user from pages*------------------------------------>
+
+Take a example of CRUD, you dont want that anyone come to your website and delete your Rooms or any post you made or any blog you write.
+
+So, to restrcit user's you can do the following:
+
+One way is:
+
+1. If you want to restrict the page form guest user, there is one way of doing this:
+   import the following:
+	- from django.contrib.auth.decoraters import required_login
+
+2. put it above the view of the page which you want to hide from guest user. For example:
+   You dont want anyone to update your room, so do following:
+   @login_required(login_url='login')
+   def updateRoom(request, pk):
+
+Consider scenerio, where a loggedin user want to update your room, to not allow doing this, follow the steps below:
+
+add this condtion to your view:
+	if request.user != room.host:
+        	return HttpResponse('You are not host of this room')
+	it will not allow the users to delete or update the content if they are not the admin of that content
+
+it will finally look like this:
+
+@login_required(login_url='login')     # it will not allow guest user to access the page
+def updateRoom(request, pk):
+    room = Room.objects.get(id=pk)
+
+    if request.user != room.host:
+        return HttpResponse('You are not host of this room')     # it will not allow user other than host to access the page 
