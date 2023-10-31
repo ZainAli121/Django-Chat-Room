@@ -25,7 +25,18 @@ def home(request):
 
 def room(request, pk):
     room = Room.objects.get(id = pk)
-    context = {'room': room}
+    room_messages = room.message_set.all().order_by('-created')
+    members = room.members.all()
+    if request.method == 'POST':
+        message = Message.objects.create(
+           user = request.user,
+           room = room,
+           body = request.POST.get('body')
+        )
+        room.members.add(request.user)
+        return redirect('room', pk=room.id)
+    
+    context = {'room': room, 'room_messages': room_messages, 'members':members}
     return render(request, 'base/room.html', context)
 
 @login_required(login_url='login')
@@ -109,3 +120,15 @@ def registerUser(request):
     context = {'form': form}
     return render(request, 'base/login_register.html', context)
 
+@login_required(login_url='login')
+def deleteMessage(request, pk):
+    room = Room.objects.get(id = pk)
+    message = Message.objects.get(id=pk)
+
+    if request.user != message.user:
+        return HttpResponse('You cannot delete this message!')
+    
+    if request.method == 'POST':
+        message.delete()
+        return redirect('room', pk=room.id)
+    return render(request, 'base/delete.html', {'obj': message})
