@@ -133,3 +133,11 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect('room', pk=room.id)
     return render(request, 'base/delete.html', {'obj': message})
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {'user': user, 'rooms': rooms, 'room_messages': room_messages, 'topics': topics}
+    return render(request, 'base/userProfile.html', context)
