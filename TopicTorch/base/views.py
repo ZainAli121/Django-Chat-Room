@@ -158,3 +158,18 @@ def userProfile(request, pk):
     topics = Topic.objects.all()
     context = {'user': user, 'rooms': rooms, 'room_messages': room_messages, 'topics': topics}
     return render(request, 'base/userProfile.html', context)
+
+
+@login_required(login_url='login')
+def updateProfile(request):
+    user = request.user
+    form = UserForm(instance=user)
+    if request.method == 'POST':
+        form = UserForm(request.POST ,instance=user)
+        if form.is_valid:
+            form.save()
+            return redirect('user-profile', pk=user.id)
+
+    
+    context = {'form': form}
+    return render (request, 'base/edit-user.html', context)
