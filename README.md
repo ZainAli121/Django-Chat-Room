@@ -1,2 +1,83 @@
 # TopicTorch
-An application built for study purposes where you can go, create you room and people can join it and you can share your thoughts or ideas with them and can take suggestions from them
+An application built for study purposes where you can go, create your room and people can join it and you can share your thoughts or ideas with them and can take suggestions from them
+
+# Preview
+
+<img width="960" alt="chrome_DrTI2503D1" src="https://github.com/ZainAli121/Django-Chat-Room/assets/129948136/a5f0c269-265a-487b-a1f0-e22ff9f836fb"> 
+
+
+<img width="960" alt="chrome_UwOanlcfb4" src="https://github.com/ZainAli121/Django-Chat-Room/assets/129948136/ea7d87bb-c604-4479-b2fd-53868bba8116">
+
+# Features
++ User Authentication
++ Custom User
++ User Profile
++ Easy Room Creation and Management
++ Room Chats
++ User-Friendly Interface
+
+# Tech Stack
++ Python
++ Django
++ Sqlite
++ HTML
++ CSS
++ JavaScript
+
+# Api
++ Access the Rooms endpoint
+  ```markdown
+     http://127.0.0.1:8000/api/rooms/
++ Access the room endpoint
+  ```markdown
+   http://127.0.0.1:8000/api/rooms/8/
+
+# Installation
+
+1. Clone the project's repository to your local envirement:
+   
+   ```markdown
+   
+   $ git clone https://github.com/ZainAli121/Django-Chat-Room.git
+
+2. Navigate to project directory:
+
+   ```markdown
+
+   cd TopicTorch
+
+3. Create the database and apply migrations:
+
+   ```markdown
+
+   python manage.py makemigrations
+   python manage.py migrate
+
+4. For accessing admin site, create super user for it:
+
+   ```markdown
+
+   python manage.py createsuperuser
+   
+
+5. Make sure to make the neccassary imports
+
+
+6. Start server with following command:
+   ```markdown
+
+     python manage.py runserver
+
+7. Click on http://127.0.0.1:8000/ to get access of website.
+
+# Contibutions
++ Your contibutions are always appreciated.
++ Fork this repository into your system
++ Make any changes or fix any bugs you found
++ Submit your changes via pull request to main repository
+
+# Contributors
++ Zain Ali
+
+
+
