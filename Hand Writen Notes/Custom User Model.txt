@@ -1,0 +1,19 @@
+Django's default UserModel will not give some some desired fields so to get rid of it, User Custom Model is created.
+
+Steps:
+1. Import the following:
+	- from django.contrib.auth.models import AbstractUser
+
+2. Create your model like this:
+class User(AbstractUser):
+    name = models.CharField(max_length=200, null=True)
+    username = models.CharField(unique=True,max_length=200)
+    email = models.EmailField(unique=True, null=True)
+    bio = models.TextField(null=True)
+
+# You can edit these fields according to your own need
+
+3. In your django Project settings, add this:
+	- AUTH_USER_MODEL = 'base.User'   # base can be replaced with your app name
+
+And now you are good to go, do remember to migrate these.

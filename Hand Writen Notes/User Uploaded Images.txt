@@ -1,0 +1,23 @@
+When the user uploads something e.g, their profile picture. We have to let django know where to store it.
+
+1. avatar = models.ImageField(null=True, default="avatar.svg")
+
+2. run the following command
+	- pip install pillow
+
+3. Add the MEDIA_ROOT and MEDIA_URL in the settings.py 
+	MEDIA_ROOT = BASE_DIR / 'static/images'
+	
+	MEDIA_URL = '/images/'
+
+4. Configure these into Project's urls.py
+- import the follwoing statements
+	- from django.conf import settings
+	- from django.conf.urls.static import static
+
+- append the follwoing with urlpatetrns like this:
+	- urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+	
+
+
