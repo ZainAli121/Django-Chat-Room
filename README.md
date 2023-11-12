@@ -46,21 +46,24 @@ An application built for study purposes where you can go, create your room and p
 
    cd TopicTorch
 
-3. Create the database and apply migrations:
+3. Create the virtual envirement:
 
    ```markdown
 
-   python manage.py makemigrations
-   python manage.py migrate
+   python -m venv venv
 
-4. For accessing admin site, create super user for it:
+4. Activate virtual envirement:
 
    ```markdown
 
-   python manage.py createsuperuser
+   venv\Scripts\activate
    
 
-5. Make sure to make the neccassary imports
+5. Run the following command to install all dependencies
+     ```markdown
+
+   python -m pip install -r requirements.txt
+
 
 
 6. Start server with following command:
