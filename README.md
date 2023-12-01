@@ -46,32 +46,26 @@ An application built for study purposes where you can go, create your room and p
 
    cd TopicTorch
 
-3. Create the virtual envirement:
-
-   ```markdown
-
-   python -m venv venv
-
-4. Activate virtual envirement:
+3. Activate virtual envirement:
 
    ```markdown
 
    venv\Scripts\activate
    
 
-5. Run the following command to install all dependencies
+4. Run the following command to install all dependencies
      ```markdown
 
    python -m pip install -r requirements.txt
 
 
 
-6. Start server with following command:
+5. Start server with following command:
    ```markdown
 
      python manage.py runserver
 
-7. Click on http://127.0.0.1:8000/ to get access of website.
+6. Click on http://127.0.0.1:8000/ to get access of website.
 
 # Contibutions
 + Your contibutions are always appreciated.
